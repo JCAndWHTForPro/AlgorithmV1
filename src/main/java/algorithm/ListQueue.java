@@ -48,7 +48,6 @@ public class ListQueue<T> {
             this.end = dataNode;
         }
     }
-    @SuppressWarnings("ConstantConditions")
     public T dequeue(){
         if(this.isEmpty()){
             return null;
