@@ -9,12 +9,6 @@ public class MaxPriorityQueue<Key extends Comparable<Key>> {
 
     private int currentSize = 0;
 
-    public MaxPriorityQueue() {
-    }
-
-    public MaxPriorityQueue(Key[] key) {
-
-    }
 
     public void insert(Key key) {
         if (this.currentSize == this.elements.length - 1) {
@@ -27,6 +21,7 @@ public class MaxPriorityQueue<Key extends Comparable<Key>> {
 
     }
 
+    @SuppressWarnings("unchecked")
     public Key delMax() {
         if (this.currentSize == 0) {
             return null;
@@ -39,6 +34,7 @@ public class MaxPriorityQueue<Key extends Comparable<Key>> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void sink(int currentSize) {
         while (currentSize <= this.currentSize) {
             int parent = currentSize;
@@ -52,6 +48,7 @@ public class MaxPriorityQueue<Key extends Comparable<Key>> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void swim(int currentSize) {
         while (currentSize >= 1) {
             int child = currentSize;
@@ -75,6 +72,7 @@ public class MaxPriorityQueue<Key extends Comparable<Key>> {
         System.out.println(new MaxPriorityQueue<Integer>().elements.length);
     }
 
+    @SuppressWarnings("unchecked")
     public Key max() {
         if (this.isEmplty()) {
             return null;
