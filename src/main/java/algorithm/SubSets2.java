@@ -14,7 +14,7 @@ public class SubSets2 {
             return result;
         }
         if (nums.length == 0) {
-            result.add(new ArrayList<Integer>());
+            result.add(new ArrayList<>());
             return result;
         }
         Arrays.sort(nums);
