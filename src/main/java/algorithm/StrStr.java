@@ -2,6 +2,7 @@ package algorithm;
 
 /**
  * Created by jicheng on 2017/4/24.
+ * 使用Robin-Karp算法
  */
 public class StrStr {
     private int modNum = 1000000;
