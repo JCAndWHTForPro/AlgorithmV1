@@ -29,6 +29,9 @@ public class SubSets2 {
                           ArrayList<ArrayList<Integer>> result) {
         result.add(new ArrayList<>(subset));
         for (int i = begin; i < nums.length; i++) {
+            if (i - 1 >= 0 && nums[i - 1] == nums[i] && i > begin) {//放置重复元素造成的重复子集的存在加的判断
+                continue;
+            }
             subset.add(nums[i]);
             solution(nums, i + 1, subset, result);
             subset.remove(subset.size() - 1);
