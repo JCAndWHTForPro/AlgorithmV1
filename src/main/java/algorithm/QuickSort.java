@@ -68,9 +68,4 @@ public class QuickSort {
         return j;
     }
 
-    public static void main(String[] args) {
-        Integer[] array = {8,5,7,1,9,11,2,22,39,0,8,-6};
-        sort(array);
-        show(array);
-    }
 }

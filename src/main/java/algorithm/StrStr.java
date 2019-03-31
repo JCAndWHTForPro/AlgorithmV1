@@ -43,7 +43,4 @@ public class StrStr {
         return -1;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new StrStr().solution("adsabcf", "abc"));
-    }
 }

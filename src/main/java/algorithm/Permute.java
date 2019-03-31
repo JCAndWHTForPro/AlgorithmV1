@@ -40,10 +40,4 @@ public class Permute {
         }
     }
 
-    public static void main(String[] args) {
-        List<List<Integer>> result = new Permute().solution(new int[]{1,2,3});
-        for(List<Integer> it : result){
-            System.out.println(it.toString());
-        }
-    }
 }
