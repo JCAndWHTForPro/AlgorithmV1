@@ -1,5 +1,8 @@
 package algorithm;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * 最小堆
  * [2,3,4,5,6,7,8]
@@ -11,12 +14,12 @@ package algorithm;
  */
 public class MinPriorityQueue<K extends Comparable<K>> {
 
-    private K[] elements;
+    private Object[] elements;
 
     private int size;
 
     public MinPriorityQueue() {
-        this.elements = (K[]) new Object[Common.INIT_SIZE];
+        this.elements = new Object[Common.INIT_SIZE];
         this.size = 0;
     }
 
@@ -51,7 +54,7 @@ public class MinPriorityQueue<K extends Comparable<K>> {
             throw new IllegalArgumentException("超出限制");
         }
 
-        K temp = elements[i];
+        K temp = (K) elements[i];
         elements[i] = elements[j];
         elements[j] = temp;
     }
@@ -67,12 +70,14 @@ public class MinPriorityQueue<K extends Comparable<K>> {
         }
         int p = index;
         while (p < size && lchild(p) < size) {
-            K currentEle = elements[p];
+            K currentEle = (K) elements[p];
             int lchild = lchild(p);
             int rchild = rchild(p);
-            int minChildIndex = rchild > size ? lchild :
-                    (elements[lchild].compareTo(elements[rchild]) > 0 ? rchild : lchild);
-            if (currentEle.compareTo(elements[minChildIndex]) > 0) {
+            K lelement = (K) elements[lchild];
+            K relement = (K) elements[rchild];
+            int minChildIndex = Objects.isNull(relement) ? lchild :
+                    (lelement.compareTo(relement) > 0 ? rchild : lchild);
+            if (currentEle.compareTo((K) elements[minChildIndex]) > 0) {
                 swap(p, minChildIndex);
                 p = minChildIndex;
             } else {
@@ -88,14 +93,14 @@ public class MinPriorityQueue<K extends Comparable<K>> {
      * @param index
      */
     public void swam(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IllegalArgumentException("超出限制");
         }
         int p = index;
         while (p > 0) {
-            K currentEle = elements[p];
+            K currentEle = (K) elements[p];
             int parentIndex = parent(p);
-            if (currentEle.compareTo(elements[parentIndex]) < 0) {
+            if (currentEle.compareTo((K) elements[parentIndex]) < 0) {
                 swap(p, parentIndex);
                 p = parentIndex;
             } else {
@@ -111,12 +116,7 @@ public class MinPriorityQueue<K extends Comparable<K>> {
      * @param element
      */
     public void addElement(K element) {
-        if (size == 0) {
-            elements[0] = element;
-            return;
-        }
-
-        if (size == Common.INIT_SIZE) {
+        if (size == elements.length) {
             resize();
         }
         elements[size] = element;
@@ -125,13 +125,36 @@ public class MinPriorityQueue<K extends Comparable<K>> {
     }
 
     /**
+     * 删除堆顶元素
+     *
+     * @return
+     */
+    public K delElemet() {
+        K result = (K) elements[0];
+        if (size > 1) {
+            swap(0, size - 1);
+            elements[--size] = null;
+            sink(0);
+        }
+        return result;
+    }
+
+    /**
      * 扩容
      */
     public void resize() {
         int length = elements.length;
-        K[] tempArr = (K[]) new Object[length + Common.GROW_SIZE];
+        Object[] tempArr = new Object[length + Common.GROW_SIZE];
         System.arraycopy(elements, 0, tempArr, 0, length);
         this.elements = tempArr;
     }
 
+
+    @Override
+    public String toString() {
+        return "MinPriorityQueue{" +
+                "elements=" + Arrays.toString(elements) +
+                ", size=" + size +
+                '}';
+    }
 }
