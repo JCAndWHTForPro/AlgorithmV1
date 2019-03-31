@@ -5,8 +5,10 @@ import java.util.Objects;
 
 /**
  * 索引最小堆
- * [2,3,4,5,6,7,8]
- * [0,1,2,3,4,5,6]
+ * [0,  1,  2,  3,  4,  5]
+ * [2,  4,  1,  0,  3,  5]
+ * [55 ,23 ,4 ,43 ,14 ,41]
+ * [3,  2,  0,  4,  1,  5]
  *
  * @ClassName: MinPriorityQueue
  * @Author: jicheng
@@ -18,14 +20,18 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
 
     private Object[] elements;
 
+    private int[] recs;
+
     private int size;
 
     public IndexMinPriorityQueue() {
         this.indexes = new int[Common.INIT_SIZE];
         this.elements = new Object[Common.INIT_SIZE];
+        this.recs = new int[Common.INIT_SIZE];
         this.size = 0;
         for (int i = 0; i < Common.INIT_SIZE; i++) {
             this.indexes[i] = -1;
+            this.recs[i] = -1;
         }
     }
 
@@ -63,6 +69,9 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         int temp = indexes[i];
         indexes[i] = indexes[j];
         indexes[j] = temp;
+
+        recs[indexes[i]] = i;
+        recs[indexes[j]] = j;
     }
 
 
@@ -128,6 +137,7 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
             resize();
         }
         indexes[size] = size;
+        recs[size] = size;
         elements[indexes[size]] = element;
         swam(size++);
     }
@@ -142,6 +152,7 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         if (size > 1) {
             swap(0, size - 1);
             elements[indexes[--size]] = null;
+            recs[indexes[size]] = -1;
             indexes[size] = -1;
             sink(0);
         }
@@ -155,13 +166,26 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         int length = elements.length;
         Object[] tempArr = new Object[length + Common.GROW_SIZE];
         int[] tempIndexes = new int[length + Common.GROW_SIZE];
+        int[] tempRecs = new int[length + Common.GROW_SIZE];
         System.arraycopy(elements, 0, tempArr, 0, length);
         System.arraycopy(indexes, 0, tempIndexes, 0, length);
+        System.arraycopy(recs, 0, tempRecs, 0, length);
         for (int i = length; i < tempIndexes.length; i++) {
             tempIndexes[i] = -1;
+            recs[i] = -1;
         }
         this.elements = tempArr;
         this.indexes = tempIndexes;
+    }
+
+    public void change(int index, K element) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("超出限制");
+        }
+        this.elements[index] = element;
+        int currentHeapIndex = this.recs[index];
+        swam(currentHeapIndex);
+        sink(currentHeapIndex);
     }
 
 
@@ -185,6 +209,8 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
                 sb.append(elements[indexes[i]]).append("]\n");
             }
         }
+
+        sb.append("反向索引数组是：").append(Arrays.toString(recs)).append("\n");
         sb.append("元素的数量是：").append(size);
 
         return sb.toString();
