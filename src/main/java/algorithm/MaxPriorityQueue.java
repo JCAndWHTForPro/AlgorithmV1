@@ -1,7 +1,10 @@
 package algorithm;
 
 /**
- * Created by jicheng on 2017/4/24.
+ * 最大堆
+ * @ClassName:      MaxPriorityQueue
+ * @Author:         jicheng
+ * @CreateDate:     2019/3/31 下午5:40
  */
 public class MaxPriorityQueue<Key extends Comparable<Key>> {
 
@@ -68,9 +71,6 @@ public class MaxPriorityQueue<Key extends Comparable<Key>> {
         this.elements[parent] = temp;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new MaxPriorityQueue<Integer>().elements.length);
-    }
 
     @SuppressWarnings("unchecked")
     public Key max() {
