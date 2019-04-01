@@ -35,6 +35,30 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         }
     }
 
+    public IndexMinPriorityQueue(int count) {
+        this.indexes = new int[count];
+        this.elements = new Object[count];
+        this.recs = new int[count];
+        this.size = 0;
+        for (int i = 0; i < count; i++) {
+            this.indexes[i] = -1;
+            this.recs[i] = -1;
+        }
+    }
+
+    public void insert(int index, K elem) {
+        if (index < 0 || index >= elements.length) {
+            throw new IllegalArgumentException("超出限制");
+        }
+//        i += 1;
+        elements[index] = elem;
+        indexes[size] = index;
+        recs[index] = size;
+        size++;
+
+        swam(size - 1);
+    }
+
 
     public int lchild(int index) {
         if (index < 0 || index > size) {
@@ -81,7 +105,7 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
      * @param index
      */
     public void sink(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IllegalArgumentException("超出限制");
         }
         int p = index;
@@ -90,9 +114,8 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
             int lchild = lchild(p);
             int rchild = rchild(p);
             K lelement = (K) elements[indexes[lchild]];
-            K relement = (K) elements[indexes[rchild]];
-            int minChildIndex = Objects.isNull(relement) ? lchild :
-                    (lelement.compareTo(relement) > 0 ? rchild : lchild);
+            int minChildIndex = indexes[rchild] == -1 ? lchild :
+                    (lelement.compareTo((K) elements[indexes[rchild]]) > 0 ? rchild : lchild);
             if (currentEle.compareTo((K) elements[indexes[minChildIndex]]) > 0) {
                 swap(p, minChildIndex);
                 p = minChildIndex;
@@ -109,7 +132,7 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
      * @param index
      */
     public void swam(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("超出限制");
         }
         int p = index;
@@ -142,6 +165,24 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         swam(size++);
     }
 
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+
+    public boolean contain(K element) {
+        for (int i = 0; indexes[i] != -1; i++) {
+            Object element1 = this.elements[indexes[i]];
+            if (element1.equals(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean contain(int index) {
+        return this.recs[index] != -1;
+    }
+
     /**
      * 删除堆顶元素
      *
@@ -149,14 +190,24 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
      */
     public K delElemet() {
         K result = (K) elements[indexes[0]];
+        delEl();
+        return result;
+    }
+
+    public int delElemetIndex() {
+        int result = indexes[0];
+        delEl();
+        return result;
+    }
+
+    private void delEl() {
         if (size > 1) {
             swap(0, size - 1);
-            elements[indexes[--size]] = null;
-            recs[indexes[size]] = -1;
-            indexes[size] = -1;
-            sink(0);
         }
-        return result;
+        elements[indexes[--size]] = null;
+        recs[indexes[size]] = -1;
+        indexes[size] = -1;
+        sink(0);
     }
 
     /**
