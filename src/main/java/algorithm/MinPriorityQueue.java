@@ -23,36 +23,55 @@ public class MinPriorityQueue<K extends Comparable<K>> {
         this.size = 0;
     }
 
+    public MinPriorityQueue(Comparable[] comps) {
+        if (Objects.isNull(comps) || comps.length == 0) {
+            throw new IllegalArgumentException("数组不能为空");
+        }
+        this.elements = new Object[comps.length];
+        this.size = 0;
+        for (int i = 0; i < comps.length && comps[i] != null; i++) {
+            this.elements[i] = comps[i];
+            this.size++;
+        }
+        heapify();
+    }
 
-    public int lchild(int index) {
-        if (index < 0 || index > size) {
+    private void heapify() {
+        if (this.size == 0) {
+            return;
+        }
+        int index = (this.size - 2) / 2;
+        for (int i = index; i >= 0; i--) {
+            sink(i);
+        }
+    }
+
+
+    private void checkLength(int index) {
+        if (index < 0 || index >= this.elements.length) {
             throw new IllegalArgumentException("超出限制");
         }
+    }
+
+    public int lchild(int index) {
+        checkLength(index);
         return (index * 2) + 1;
     }
 
     public int rchild(int index) {
-        if (index < 0 || index > size) {
-            throw new IllegalArgumentException("超出限制");
-        }
+        checkLength(index);
         return (index * 2) + 2;
     }
 
 
     public int parent(int index) {
-        if (index < 0 || index > size) {
-            throw new IllegalArgumentException("超出限制");
-        }
+        checkLength(index);
         return (index - 1) / 2;
     }
 
     public void swap(int i, int j) {
-        if (i < 0 || i > size) {
-            throw new IllegalArgumentException("超出限制");
-        }
-        if (j < 0 || j > size) {
-            throw new IllegalArgumentException("超出限制");
-        }
+        checkLength(i);
+        checkLength(j);
 
         K temp = (K) elements[i];
         elements[i] = elements[j];
@@ -61,22 +80,28 @@ public class MinPriorityQueue<K extends Comparable<K>> {
 
     /**
      * 下沉
-     *
-     * @param index
      */
     public void sink(int index) {
-        if (index < 0 || index >= size) {
-            throw new IllegalArgumentException("超出限制");
-        }
+        checkLength(index);
         int p = index;
+        /**
+         * 如果左孩子大于或者等于当前堆中元素个数的话，
+         * 表明当前节点已经是叶子节点，可以不用继续遍历了
+         */
         while (p < size && lchild(p) < size) {
             K currentEle = (K) elements[p];
+            // 获取左孩子索引
             int lchild = lchild(p);
+            // 获取右孩子索引
             int rchild = rchild(p);
+            // 获取左孩子的值
             K lelement = (K) elements[lchild];
+            // 获取右孩子的值
             K relement = (K) elements[rchild];
+            // 获取左右孩子最小值的那个节点索引，注意，这里右孩子有可能为空
             int minChildIndex = Objects.isNull(relement) ? lchild :
                     (lelement.compareTo(relement) > 0 ? rchild : lchild);
+            // 使用当前节点值与最小值比较，如果当前值还要小，那就交换
             if (currentEle.compareTo((K) elements[minChildIndex]) > 0) {
                 swap(p, minChildIndex);
                 p = minChildIndex;
@@ -93,9 +118,9 @@ public class MinPriorityQueue<K extends Comparable<K>> {
      * @param index
      */
     public void swam(int index) {
-        if (index < 0 || index > size) {
-            throw new IllegalArgumentException("超出限制");
-        }
+
+        checkLength(index);
+
         int p = index;
         while (p > 0) {
             K currentEle = (K) elements[p];
@@ -107,13 +132,10 @@ public class MinPriorityQueue<K extends Comparable<K>> {
                 break;
             }
         }
-
     }
 
     /**
      * 添加元素
-     *
-     * @param element
      */
     public void addElement(K element) {
         if (size == elements.length) {
@@ -126,15 +148,18 @@ public class MinPriorityQueue<K extends Comparable<K>> {
 
     /**
      * 删除堆顶元素
-     *
-     * @return
      */
     public K delElemet() {
+        if (size == 0) {
+            throw new IllegalArgumentException("当前堆已经空了");
+        }
         K result = (K) elements[0];
         if (size > 1) {
             swap(0, size - 1);
             elements[--size] = null;
             sink(0);
+        } else {
+            size--;
         }
         return result;
     }

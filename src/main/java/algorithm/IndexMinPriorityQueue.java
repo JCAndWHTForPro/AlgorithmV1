@@ -50,12 +50,11 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         if (index < 0 || index >= elements.length) {
             throw new IllegalArgumentException("超出限制");
         }
-//        i += 1;
         elements[index] = elem;
         indexes[size] = index;
         recs[index] = size;
         size++;
-
+        // 上浮
         swam(size - 1);
     }
 
@@ -101,8 +100,6 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
 
     /**
      * 下沉
-     *
-     * @param index
      */
     public void sink(int index) {
         if (index < 0 || index > size) {
@@ -128,8 +125,6 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
 
     /**
      * 上浮
-     *
-     * @param index
      */
     public void swam(int index) {
         if (index < 0 || index >= size) {
@@ -157,11 +152,16 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
      */
     public void addElement(K element) {
         if (size == elements.length) {
+            // 扩容
             resize();
         }
+        // 索引数组的末尾添加这个元素的索引值
         indexes[size] = size;
+        // 反向索引也是最后一位添加
         recs[size] = size;
+        // 其实这也是最后一位添加，因为此时indexes[size] = size
         elements[indexes[size]] = element;
+        // 先对最后一位的索引进行上浮操作，然后再将size加一
         swam(size++);
     }
 
@@ -186,7 +186,7 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
     /**
      * 删除堆顶元素
      *
-     * @return
+     * @return 堆顶的具体元素值
      */
     public K delElemet() {
         K result = (K) elements[indexes[0]];
@@ -194,6 +194,11 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         return result;
     }
 
+    /**
+     * 删除堆顶元素
+     *
+     * @return 堆顶的具体元素索引值
+     */
     public int delElemetIndex() {
         int result = indexes[0];
         delEl();
@@ -202,11 +207,16 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
 
     private void delEl() {
         if (size > 1) {
+            // 这里其实是交换索引数组的第一位和最后一位的值
             swap(0, size - 1);
         }
+        // 此时要把末尾的索引值对应的元素置空，代表删除原始数据
         elements[indexes[--size]] = null;
+        // 当然，反向索引数组的值也要删除，置位-1
         recs[indexes[size]] = -1;
+        // 当然，最后要把索引数组值删除，其实就是最后一位
         indexes[size] = -1;
+        // 对索引数组，就是第一位开始，做下沉
         sink(0);
     }
 
@@ -223,10 +233,11 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
         System.arraycopy(recs, 0, tempRecs, 0, length);
         for (int i = length; i < tempIndexes.length; i++) {
             tempIndexes[i] = -1;
-            recs[i] = -1;
+            tempRecs[i] = -1;
         }
         this.elements = tempArr;
         this.indexes = tempIndexes;
+        this.recs = tempRecs;
     }
 
     public void change(int index, K element) {
@@ -234,6 +245,7 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
             throw new IllegalArgumentException("超出限制");
         }
         this.elements[index] = element;
+        // 这时候，反向索引数组就显示作用了：获取这个修改值对应的堆中的索引值
         int currentHeapIndex = this.recs[index];
         swam(currentHeapIndex);
         sink(currentHeapIndex);
