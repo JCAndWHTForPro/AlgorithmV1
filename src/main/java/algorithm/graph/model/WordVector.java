@@ -1,5 +1,7 @@
 package algorithm.graph.model;
 
+import algorithm.graph.IVertices;
+
 import java.util.Objects;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Objects;
  * @Author: jicheng
  * @CreateDate: 2019/4/1 上午12:33
  */
-public class WordVector implements Comparable<WordVector>{
+public class WordVector implements IVertices<String>, Comparable<WordVector>{
 
     private int index;
 
@@ -21,21 +23,11 @@ public class WordVector implements Comparable<WordVector>{
         this.word = word;
     }
 
+    @Override
     public int getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,5 +52,10 @@ public class WordVector implements Comparable<WordVector>{
     @Override
     public int compareTo(WordVector o) {
         return this.getIndex() - o.getIndex();
+    }
+
+    @Override
+    public String getData() {
+        return this.word;
     }
 }

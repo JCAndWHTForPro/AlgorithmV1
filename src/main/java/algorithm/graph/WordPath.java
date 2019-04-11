@@ -14,18 +14,22 @@ public class WordPath {
 
     private Graph<WordVector, WordEdge> graph;
 
-    private Map<WordEdge, Boolean> isVisited;
+    private Map<WordEdge, Integer> edgeVisitedCount;
+
+    private Map<WordVector, Integer> verticesVisitedCount;
 
     public WordPath(Graph<WordVector, WordEdge> graph) {
         this.graph = graph;
-        this.isVisited = new HashMap<>();
+        this.edgeVisitedCount = new HashMap<>();
+        this.verticesVisitedCount = new HashMap<>();
 
         Map<WordVector, List<WordEdge>> vectors = graph.getVectors();
 
         for (Map.Entry<WordVector, List<WordEdge>> entry : vectors.entrySet()) {
             List<WordEdge> value = entry.getValue();
             for (WordEdge it : value) {
-                isVisited.put(it, false);
+                edgeVisitedCount.put(it, 0);
+                verticesVisitedCount.put(it.getV1(), 0);
             }
         }
 
@@ -68,7 +72,7 @@ public class WordPath {
 
     private void depestPath(WordEdge edge, WordVector dest, Stack<WordEdge> edgesResult, List<List<WordEdge>> result) {
         WordVector v2 = edge.getV2();
-        if (v2.getWord().equals(dest.getWord())) {
+        if (v2.getData().equals(dest.getData())) {
             ArrayList<WordEdge> path = new ArrayList<>();
             result.add(path);
             for (WordEdge it : edgesResult) {
@@ -100,7 +104,7 @@ public class WordPath {
             return;
         }
         WordVector v2 = edge.getV2();
-        if (v2.getWord().equals(dest.getWord())) {
+        if (v2.getData().equals(dest.getData())) {
             ArrayList<WordEdge> path = new ArrayList<>();
             result.add(path);
             for (WordEdge it : edgesResult) {
@@ -118,7 +122,7 @@ public class WordPath {
         for (WordEdge it : edges) {
             edgesResult.push(it);
             // 开始递归
-            depestPath4FourNode(it, dest,count+1, edgesResult, result);
+            depestPath4FourNode(it, dest, count + 1, edgesResult, result);
         }
         edgesResult.pop();
 

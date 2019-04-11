@@ -9,10 +9,12 @@ import java.util.*;
  * @Author: jicheng
  * @CreateDate: 2019/3/31 下午11:37
  */
-public class Graph<V, E extends IEdge<V>> {
+public class Graph<V extends IVertices, E extends IEdge<V>> {
 
+    // 当前图中的结点数目
     private int vsize;
 
+    // 当前图中的边的数目
     private int esize;
 
     private Map<V, List<E>> vectors;
