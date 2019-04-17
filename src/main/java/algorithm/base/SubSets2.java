@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.base;
 
 import java.util.ArrayList;
 import java.util.Arrays;

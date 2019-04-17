@@ -1,4 +1,4 @@
-package algorithm.graph;
+package structure.graph;
 
 /**
  * @ClassName: IVertices

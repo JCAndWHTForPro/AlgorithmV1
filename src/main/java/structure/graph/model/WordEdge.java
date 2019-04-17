@@ -1,6 +1,6 @@
-package algorithm.graph.model;
+package structure.graph.model;
 
-import algorithm.graph.IEdge;
+import structure.graph.IEdge;
 
 import java.util.Objects;
 

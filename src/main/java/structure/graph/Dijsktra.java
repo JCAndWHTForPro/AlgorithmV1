@@ -1,8 +1,8 @@
-package algorithm.graph;
+package structure.graph;
 
-import algorithm.IndexMinPriorityQueue;
-import algorithm.graph.model.WordEdge;
-import algorithm.graph.model.WordVector;
+import structure.IndexMinPriorityQueue;
+import structure.graph.model.WordEdge;
+import structure.graph.model.WordVector;
 
 import java.util.HashMap;
 import java.util.List;

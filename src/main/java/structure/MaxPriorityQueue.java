@@ -1,4 +1,4 @@
-package algorithm;
+package structure;
 
 /**
  * 最大堆

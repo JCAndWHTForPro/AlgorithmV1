@@ -1,6 +1,7 @@
 package algorithm;
 
 import org.junit.Test;
+import structure.MinPriorityQueue;
 
 /**
  * @ClassName: TestMinPriorityQueue

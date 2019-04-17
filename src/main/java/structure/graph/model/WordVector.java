@@ -1,6 +1,6 @@
-package algorithm.graph.model;
+package structure.graph.model;
 
-import algorithm.graph.IVertices;
+import structure.graph.IVertices;
 
 import java.util.Objects;
 

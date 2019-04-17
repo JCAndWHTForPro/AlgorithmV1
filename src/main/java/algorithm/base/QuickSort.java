@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.base;
 
 /**
  * Created by jicheng on 2017/4/24.

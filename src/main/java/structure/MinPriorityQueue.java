@@ -1,4 +1,4 @@
-package algorithm;
+package structure;
 
 import java.util.Arrays;
 import java.util.Objects;

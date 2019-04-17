@@ -1,4 +1,6 @@
-package algorithm;
+package structure;
+
+import structure.Common;
 
 /**
  * Created by jicheng on 2017/4/19.

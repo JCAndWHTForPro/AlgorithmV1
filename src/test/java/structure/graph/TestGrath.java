@@ -1,14 +1,12 @@
-package algorithm.graph;
+package structure.graph;
 
-import algorithm.graph.model.WordEdge;
-import algorithm.graph.model.WordVector;
+import structure.graph.model.WordEdge;
+import structure.graph.model.WordVector;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @ClassName: TestGrath
@@ -44,7 +42,7 @@ public class TestGrath {
         graph.addEdge(new WordEdge(e, b, 3));
         graph.addEdge(new WordEdge(a, e, 7));
         System.out.println(graph);
-
+/*
 
         try {
             int distanceABC = distance(graph, Arrays.asList(a, b, c));
@@ -79,18 +77,18 @@ public class TestGrath {
             System.out.println("a-e-d的距离是：" + distanceAED);
         } catch (Exception e1) {
             System.out.println(e1.getMessage());
-        }
+        }*/
 
-        WordPath wordPath = new WordPath(graph);
-        List<List<WordEdge>> lists = wordPath.depestPath(c, c);
+        WordDepestPath wordDepestPath = new WordDepestPath(graph);
+        List<List<WordEdge>> lists = wordDepestPath.depestPath(c, c);
         System.out.println("c到c最多有3站的数量是：" + lists.stream().filter(value -> value.size() <= 3).count());
 
-        List<List<WordEdge>> lists2 = wordPath.depestPath4FourNode(a, c);
+        /*List<List<WordEdge>> lists2 = wordPath.depestPath4FourNode(a, c);
         System.out.println("a到c最必须要有4站的数量是：" + lists2.stream().filter(value -> value.size() == 4).count());
 
 
         Dijsktra dijsktra = new Dijsktra(graph, a);
-        System.out.println("a-c的最短路径是：" + dijsktra.getDistTo()[c.getIndex()]);
+        System.out.println("a-c的最短路径是：" + dijsktra.getDistTo()[c.getIndex()]);*/
 
 
     }

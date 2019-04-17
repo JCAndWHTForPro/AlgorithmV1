@@ -1,4 +1,4 @@
-package algorithm;
+package structure;
 
 /**
  * Created by jicheng on 2017/4/19.
