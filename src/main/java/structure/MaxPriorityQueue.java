@@ -8,7 +8,7 @@ package structure;
  */
 public class MaxPriorityQueue<Key extends Comparable<Key>> {
 
-    private Object[] elements = new Object[Common.INIT_SIZE + 1];
+    private Object[] elements = new Object[Constants.INIT_SIZE + 1];
 
     private int currentSize = 0;
 

@@ -19,7 +19,7 @@ public class MinPriorityQueue<K extends Comparable<K>> {
     private int size;
 
     public MinPriorityQueue() {
-        this.elements = new Object[Common.INIT_SIZE];
+        this.elements = new Object[Constants.INIT_SIZE];
         this.size = 0;
     }
 
@@ -169,7 +169,7 @@ public class MinPriorityQueue<K extends Comparable<K>> {
      */
     public void resize() {
         int length = elements.length;
-        Object[] tempArr = new Object[length + Common.GROW_SIZE];
+        Object[] tempArr = new Object[length + Constants.GROW_SIZE];
         System.arraycopy(elements, 0, tempArr, 0, length);
         this.elements = tempArr;
     }

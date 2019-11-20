@@ -1,7 +1,5 @@
 package structure;
 
-import structure.Common;
-
 /**
  * Created by jicheng on 2017/4/19.
  */
@@ -12,7 +10,7 @@ public class Stack<T> {
 
     private int top = -1;
 
-    private int size = Common.INIT_SIZE;
+    private int size = Constants.INIT_SIZE;
 
     public Stack() {
         this.elements = new Object[this.size];
@@ -33,7 +31,7 @@ public class Stack<T> {
 
     public void ensureLarge() {
         if (this.size() == this.size) {
-            Object[] newElements = new Object[this.size() + Common.GROW_SIZE];
+            Object[] newElements = new Object[this.size() + Constants.GROW_SIZE];
             System.arraycopy(this.elements, 0, newElements, 0, this.size());
             this.elements = newElements;
             this.size = newElements.length;

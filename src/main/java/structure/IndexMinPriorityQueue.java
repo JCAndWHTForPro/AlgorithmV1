@@ -25,11 +25,11 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
     private int size;
 
     public IndexMinPriorityQueue() {
-        this.indexes = new int[Common.INIT_SIZE];
-        this.elements = new Object[Common.INIT_SIZE];
-        this.recs = new int[Common.INIT_SIZE];
+        this.indexes = new int[Constants.INIT_SIZE];
+        this.elements = new Object[Constants.INIT_SIZE];
+        this.recs = new int[Constants.INIT_SIZE];
         this.size = 0;
-        for (int i = 0; i < Common.INIT_SIZE; i++) {
+        for (int i = 0; i < Constants.INIT_SIZE; i++) {
             this.indexes[i] = -1;
             this.recs[i] = -1;
         }
@@ -225,9 +225,9 @@ public class IndexMinPriorityQueue<K extends Comparable<K>> {
      */
     public void resize() {
         int length = elements.length;
-        Object[] tempArr = new Object[length + Common.GROW_SIZE];
-        int[] tempIndexes = new int[length + Common.GROW_SIZE];
-        int[] tempRecs = new int[length + Common.GROW_SIZE];
+        Object[] tempArr = new Object[length + Constants.GROW_SIZE];
+        int[] tempIndexes = new int[length + Constants.GROW_SIZE];
+        int[] tempRecs = new int[length + Constants.GROW_SIZE];
         System.arraycopy(elements, 0, tempArr, 0, length);
         System.arraycopy(indexes, 0, tempIndexes, 0, length);
         System.arraycopy(recs, 0, tempRecs, 0, length);
