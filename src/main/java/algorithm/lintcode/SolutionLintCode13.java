@@ -9,7 +9,7 @@ package algorithm.lintcode;
  * @Author: jicheng
  * @CreateDate: 2019/11/22 2:02 PM
  */
-public class SolutionLintCode415 {
+public class SolutionLintCode13 {
 
 
 
