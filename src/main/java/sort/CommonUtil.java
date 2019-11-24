@@ -1,5 +1,7 @@
 package sort;
 
+import java.util.Random;
+
 /**
  * @ClassName: CommonUtil
  * @Author: jicheng
@@ -11,7 +13,21 @@ public class CommonUtil {
     }
 
 
+    public static Integer[] generateIntegerArray(int count, int start, int end) {
+        if (count == 0) {
+            return new Integer[0];
+        }
+        Integer[] result = new Integer[count];
+        Random random = new Random(37);
+        for (int i = 0; i < count; i++) {
+            int num = random.nextInt(end - start + 1) + start;
+            result[i] = Integer.valueOf(num);
+        }
 
+        return result;
+
+
+    }
 
     public static <T> void swap(T[] arr, int orginIndex, int newIndex) {
         T temp = arr[orginIndex];
@@ -20,7 +36,7 @@ public class CommonUtil {
     }
 
     public static <T> String arr2String(T[] arr) {
-        if(arr == null || arr.length == 0){
+        if (arr == null || arr.length == 0) {
             return "";
         }
         StringBuffer sb = new StringBuffer();
