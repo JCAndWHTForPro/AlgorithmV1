@@ -10,6 +10,9 @@ public class SelectionSort<V extends Comparable<V>> {
 
 
     public void sort(V[] array) {
+        if(array == null){
+            return;
+        }
         int length = array.length;
         for (int i = 0; i < length; i++) {
             for (int j = i + 1; j < length; j++) {

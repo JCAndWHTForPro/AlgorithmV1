@@ -11,6 +11,8 @@ public class CommonUtil {
     }
 
 
+
+
     public static <T> void swap(T[] arr, int orginIndex, int newIndex) {
         T temp = arr[orginIndex];
         arr[orginIndex] = arr[newIndex];
@@ -18,6 +20,9 @@ public class CommonUtil {
     }
 
     public static <T> String arr2String(T[] arr) {
+        if(arr == null || arr.length == 0){
+            return "";
+        }
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < arr.length; i++) {
             sb.append(arr[i].toString()).append(", ");

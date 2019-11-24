@@ -9,6 +9,9 @@ public class BubbleSort<V extends Comparable<V>> {
 
 
     public void sort(V[] array) {
+        if(array == null){
+            return;
+        }
         int length = array.length;
         for (int i = 0; i < length - 1; i++) {
             for (int j = length - 1; j > i; j--) {

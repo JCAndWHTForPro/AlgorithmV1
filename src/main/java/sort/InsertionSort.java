@@ -9,6 +9,9 @@ public class InsertionSort<V extends Comparable<V>> {
 
 
     public void sort(V[] array) {
+        if(array == null){
+            return;
+        }
         int length = array.length;
         for (int i = 1; i < length; i++) {
 
