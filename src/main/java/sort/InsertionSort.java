@@ -9,15 +9,19 @@ public class InsertionSort<V extends Comparable<V>> {
 
 
     public void sort(V[] array) {
-        if(array == null){
+        if (array == null) {
             return;
         }
-        int length = array.length;
-        for (int i = 1; i < length; i++) {
+        sort(array, 0, array.length - 1);
+    }
+
+    public void sort(V[] array, int startPos, int endPos) {
+        int length = endPos - startPos + 1;
+        for (int i = startPos + 1; i < length; i++) {
 
             int j = i;
             V temp = array[i];
-            while (j > 0) {
+            while (j > startPos) {
                 if (temp.compareTo(array[j - 1]) < 0) {
                     array[j] = array[j - 1];
                     j--;
