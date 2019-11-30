@@ -22,7 +22,7 @@ public class Stack<T> {
     }
 
     public int size() {
-        return this.top+1;
+        return this.top + 1;
     }
 
     public boolean isEmpty() {
@@ -43,33 +43,49 @@ public class Stack<T> {
         if (top == -1) {
             return null;
         } else {
-            return (T) elements[top--];
+            T element = (T) elements[top];
+            elements[top] = null;
+            top--;
+            return element;
         }
     }
-    public void push(T element){
+
+    public void push(T element) {
         this.ensureLarge();
         this.elements[++top] = element;
     }
 
     @SuppressWarnings("unchecked")
-    public T get(int index){
-        if(top!=-1 && index<=top && index>=0){
-            return (T)this.elements[index];
+    public T get(int index) {
+        if (top != -1 && index <= top && index >= 0) {
+            return (T) this.elements[index];
         }
         return null;
     }
 
-    public boolean find(T elem){
-        for(int i=0;i<=top;i++){
-            if(this.elements[i].equals(elem)){
+    /**
+     * 查看栈顶元素
+     * @return
+     */
+    public T peek() {
+        if (top == -1) {
+            return null;
+        }
+        return (T) this.elements[top];
+    }
+
+    public boolean find(T elem) {
+        for (int i = 0; i <= top; i++) {
+            if (this.elements[i].equals(elem)) {
                 return true;
             }
         }
         return false;
     }
-    public int indexof(T elem){
-        for(int i=0;i<=top;i++){
-            if(this.elements[i].equals(elem)){
+
+    public int indexof(T elem) {
+        for (int i = 0; i <= top; i++) {
+            if (this.elements[i].equals(elem)) {
                 return i;
             }
         }
