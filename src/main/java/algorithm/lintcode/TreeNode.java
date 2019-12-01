@@ -6,6 +6,7 @@ package algorithm.lintcode;
  * @CreateDate: 2019/12/1 8:56 PM
  */
 public class TreeNode {
+
     public int val;
     public TreeNode left, right;
 
