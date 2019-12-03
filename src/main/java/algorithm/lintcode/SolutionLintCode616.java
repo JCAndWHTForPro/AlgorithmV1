@@ -4,25 +4,12 @@ package algorithm.lintcode;
 import java.util.*;
 
 /**
- * 基础的课程表问题：
- * 现在你总共有 n 门课需要选，记为 0 到 n - 1.
- * 一些课程在修之前需要先修另外的一些课程，比如要学习课程 0 你需要先学习课程 1 ，表示为[0,1]
- * 给定n门课以及他们的先决条件，判断是否可能完成所有课程？
- * <p>
- * 例1:
- * <p>
- * 输入: n = 2, prerequisites = [[1,0]]
- * 输出: true
- * 例2:
- * <p>
- * 输入: n = 2, prerequisites = [[1,0],[0,1]]
- * 输出: false
  *
- * @ClassName: SolutionLintCode615
+ * @ClassName: SolutionLintCode616
  * @Author: jicheng
  * @CreateDate: 2019/12/3 12:27 AM
  */
-public class SolutionLintCode615 {
+public class SolutionLintCode616 {
 
 
     /*
@@ -30,18 +17,15 @@ public class SolutionLintCode615 {
      * @param prerequisites: a list of prerequisite pairs
      * @return: true if can finish all courses or false
      */
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public int[] findOrder(int numCourses, int[][] prerequisites){
         // write your code here
 
 
         if (prerequisites == null ) {
-            return false;
+            return new int[0];
         }
 
-        if(prerequisites.length==0|| prerequisites[0].length == 0){
-            //TODO jicheng 这里要注意，无论是[] 还是 [[],[],[]]等，都没有对课程的限制，所以是多少节课，都可以有一条路径的
-            return true;
-        }
+        int[] result = new int[numCourses];
 
 
         int[] inDegress = new int[numCourses];
@@ -50,7 +34,6 @@ public class SolutionLintCode615 {
         for (int i = 0; i < prerequisites.length; i++) {
             for (int j = 0; j < prerequisites[i].length - 1; j++) {
                 inDegress[prerequisites[i][j]] += 1;
-//                preNode[prerequisites[i][j + 1]] = prerequisites[i][j];
                 int key = prerequisites[i][j + 1];
                 List<Integer> integers = mapping.get(key);
                 if(integers == null){
@@ -73,6 +56,7 @@ public class SolutionLintCode615 {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Integer poll = queue.poll();
+                result[len] = poll.intValue();
                 len++;
                 List<Integer> integers = mapping.get(poll);
                 if(integers == null){
@@ -88,20 +72,20 @@ public class SolutionLintCode615 {
             }
         }
 
-        if(len == numCourses){
-            return true;
+        if(len != numCourses){
+            return new int[0];
         }
 
 
-        return false;
+        return result;
 
     }
 
     public static void main(String[] args) {
-        int[][] pre = {{1,0},{0,1}};
-        SolutionLintCode615 solutionLintCode615 = new SolutionLintCode615();
-        boolean b = solutionLintCode615.canFinish(2, pre);
-        System.out.println(b);
+        int[][] pre = {{1,0},{2,0},{3,1},{3,2}};
+        SolutionLintCode616 solutionLintCode615 = new SolutionLintCode616();
+        int[] order = solutionLintCode615.findOrder(4, pre);
+        System.out.println(Arrays.asList(order));
 
     }
 }
