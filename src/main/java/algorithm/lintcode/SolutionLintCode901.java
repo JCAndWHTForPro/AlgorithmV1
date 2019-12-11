@@ -45,6 +45,34 @@ import java.util.*;
  * @CreateDate: 2019/12/9 9:04 PM
  */
 public class SolutionLintCode901 {
+
+    private class Num{
+        public int f;
+        public int m;
+        public int t;
+
+        public Num(int f, int m, int t){
+            this.f = f;
+            this.m = m;
+            this.t = t;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Num num = (Num) o;
+            return f == num.f &&
+                    m == num.m &&
+                    t == num.t;
+        }
+
+        @Override
+        public int hashCode() {
+
+            return Objects.hash(f, m, t);
+        }
+    }
     /**
      * @param root:   the given BST
      * @param target: the given target
