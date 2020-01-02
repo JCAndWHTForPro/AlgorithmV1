@@ -57,6 +57,9 @@ public class SolutionLintCode17 {
         return result;
     }
 
+    /**
+     *  @param i 这里的i代表第i个点
+     */
     private void subsets(int[] nums, int i, List<Integer> subList, List<List<Integer>> result) {
         if (i == nums.length) {
             result.add(new ArrayList<>(subList));
