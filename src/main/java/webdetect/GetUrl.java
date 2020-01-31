@@ -1,4 +1,4 @@
-package web_detect;
+package webdetect;
 
 import java.io.InputStream;
 import java.net.URL;
