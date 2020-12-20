@@ -52,7 +52,7 @@ public class SolutionLintCode5 {
 
         // 这个if很巧妙，这种情况说明，第一个字符，就是最大（最小）字符的第一个（分割点）；
         // 不加的话就有问题，因为无法吧第k大（小）这个层级中要剔除的给干掉，然后就无线递归了
-        if(s == start){
+        if (s == start) {
             s++;
         }
         if (s - start >= n) {
@@ -63,7 +63,7 @@ public class SolutionLintCode5 {
     }
 
     public static void main(String[] args) {
-        int[] arr = {1,2,3,4,5,6,8,9,10,7};
+        int[] arr = {1, 2, 3, 4, 5, 6, 8, 9, 10, 7};
         SolutionLintCode5 solutionLintCode5 = new SolutionLintCode5();
         int i = solutionLintCode5.kthLargestElement(10, arr);
         System.out.println(i);

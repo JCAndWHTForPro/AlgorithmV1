@@ -2,6 +2,7 @@ package niostudy;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.nio.file.StandardCopyOption;
 
 /**
  * 测试文件拷贝的效率
+ *
  * @ClassName: FileCopy
  * @Author: jicheng
  * @CreateDate: 2020/1/31 4:00 PM
@@ -41,6 +43,21 @@ public class FileCopy {
         }
         end = System.currentTimeMillis();
         System.out.println("新的拷贝时间：" + (end - begin));
+
+
+        begin = System.currentTimeMillis();
+        try (RandomAccessFile randomAccessFile1 = new RandomAccessFile("/Users/jicheng/Project/temp_file/copy_file_111", "rw");
+             RandomAccessFile randomAccessFile2 = new RandomAccessFile("/Users/jicheng/Project/temp_file/copy_file_222", "rw")) {
+            FileChannel fromChannel = randomAccessFile1.getChannel();
+            MappedByteBuffer fromMap = fromChannel.map(FileChannel.MapMode.READ_WRITE, 0, fromChannel.size());
+            FileChannel toChannel = randomAccessFile2.getChannel();
+            MappedByteBuffer toMap = toChannel.map(FileChannel.MapMode.READ_WRITE, 0, fromChannel.size());
+            toMap.put(fromMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        end = System.currentTimeMillis();
+        System.out.println("mmap的拷贝时间：" + (end - begin));
 
     }
 }
